@@ -8,10 +8,27 @@ mongoose.connect("mongodb://localhost:27017/movie-tasklist", {useNewUrlParser: t
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/scripts"));
 
 app.get("/", function(req, res) {
-    
-    res.render("tasks/index");
+    var movies = [
+        {
+            title: "Heathers (1989)",
+            due: new Date(2020, 2, 7),
+            status: "plan to watch"
+        },
+        {
+            title: "Hamilton (2015)",
+            due: new Date(2017, 0, 30),
+            status: "plan to watch"
+        },
+        {
+            title: "Dear Evan Hansen (2017)",
+            due: new Date(2019, 5, 26),
+            status: "plan to watch"
+        }
+    ];
+    res.render("tasks/index", {movies, movies});
 });
 
 app.get("/register", function(req, res){
