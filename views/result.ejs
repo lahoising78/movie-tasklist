@@ -12,14 +12,16 @@
         </tr>
     </thead>
     <tbody>
-        <% data.Search.forEach(function(movie){ %>
+        <% if(data.Search) {data.Search.forEach(function(movie){ %>
             <tr>
                 <td><%= movie.Title %></td>
                 <td><%= movie.Year %></td>
                 <td><%= movie.Type %></td>
-                <td><button>Add</button></td>
+                <td>
+                    <a class="btn btn-primary" href="/new/<%= movie.imdbID %>">Add</a>
+                </td>
             </tr>
-        <% }); %>
+        <% }); }%>
     </tbody>
 </table>
 

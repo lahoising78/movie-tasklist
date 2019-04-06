@@ -25,6 +25,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//=========================routes=============================
 app.get("/", function(req, res) {
     var movies = [];
     res.render("tasks/index", {movies, movies});
@@ -45,6 +46,13 @@ app.get("/result", function(req, res){
     });
 
 });
+
+app.get("/new/:id", function(req, res){
+    res.send("id of movie: "+req.params.id);
+    //console.log("id of movie: "+req.params.id);
+});
+
+//=================authentication======================
 app.get("/register", function(req, res){
     res.render("register");
 });
@@ -65,6 +73,7 @@ app.post("/register", function(req, res){
     });
 });
 
+//======================listen==========================
 app.listen(3000, function(){
     console.log("server is live");
 });
