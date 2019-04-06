@@ -4,7 +4,8 @@ var express = require("express"),
     passport = require("passport"),
     bodyParser = require("body-parser"),
     LocalStrategy = require("passport-local"),
-    passportLocalMongoose = require("passport-local-mongoose");
+    passportLocalMongoose = require("passport-local-mongoose"),
+    request = require("request"),
     User = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/movie-tasklist", {useNewUrlParser: true});
@@ -29,6 +30,21 @@ app.get("/", function(req, res) {
     res.render("tasks/index", {movies, movies});
 });
 
+app.get("/search", function(req, res){
+    res.render("search");
+});
+
+app.get("/result", function(req, res){
+    var query = req.query.search;
+    var url = "http://www.omdbapi.com/?s=" + query + "&apikey=thewdb";
+    request(url, function(err, response, body){
+        if (!err && response.statusCode == 200) {
+            var data = JSON.parse(body);
+            res.render("result", {data: data});
+        }
+    });
+
+});
 app.get("/register", function(req, res){
     res.render("register");
 });
