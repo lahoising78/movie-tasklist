@@ -13,19 +13,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Primera</td>
-            <td>fila</td>
-            <td>plan to watch</td>
-        </tr>
-        <tr>
-            <td>Segunda</td>
-            <td>fila</td>
-            <td>plan to watch or something</td>
-        </tr>
+        <% movies.forEach(function(movie) { %>
+            <tr>
+                <td><%= movie.title %></td>
+                <td><%= movie.due.toDateString() %></td>
+                <td><%= movie.status %></td>
+            </tr>
+        <% }); %>
     </tbody>
 </table>
 
-<script src="/index.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
 
 <% include ../partials/footer %>
