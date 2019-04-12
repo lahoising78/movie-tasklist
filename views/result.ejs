@@ -18,7 +18,10 @@
                 <td><%= movie.Year %></td>
                 <td><%= movie.Type %></td>
                 <td>
-                    <a class="btn btn-primary" href="/new/<%= movie.imdbID %>">Add</a>
+                    <form action="/tasks" method="post">
+                        <input class="hiddenID" type="text" name="task[id]" value="<%= movie.imdbID %>">
+                        <button class="btn btn-primary">Add</button>
+                    </form>
                 </td>
             </tr>
         <% }); }%>

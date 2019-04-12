@@ -1,16 +1,17 @@
 var express = require("express"),
     app = express(),
+    bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     passport = require("passport"),
-    bodyParser = require("body-parser"),
     LocalStrategy = require("passport-local"),
-    passportLocalMongoose = require("passport-local-mongoose"),
+    //passportLocalMongoose = require("passport-local-mongoose"),
     request = require("request"),
+    indexRoutes = require("./routes/index"),
     User = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/movie-tasklist", {useNewUrlParser: true});
-app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/scripts"));
 app.use(require("express-session")({
@@ -47,31 +48,12 @@ app.get("/result", function(req, res){
 
 });
 
-app.get("/new/:id", function(req, res){
-    res.send("id of movie: "+req.params.id);
+app.post("/tasks", function(req, res){
+    res.send("id of movie: " + req.body.task.id);
     //console.log("id of movie: "+req.params.id);
 });
 
-//=================authentication======================
-app.get("/register", function(req, res){
-    res.render("register");
-});
-
-app.post("/register", function(req, res){
-    var newUser = User({
-        username: req.body.username,
-        password: req.body.password
-    });
-
-    User.create(newUser, function(err, user){
-        if (err) {
-            console.log(err);
-            return res.redirect("/register");
-        }
-        
-        res.redirect("/");
-    });
-});
+app.use("/", indexRoutes);
 
 //======================listen==========================
 app.listen(3000, function(){

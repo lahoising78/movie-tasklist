@@ -1,3 +1,7 @@
 .late {
     color: red;
 }
+
+.hiddenID {
+    display: none;
+}
