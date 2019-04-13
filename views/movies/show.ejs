@@ -1,0 +1,10 @@
+<% include ../partials/header %>
+
+<h1><%= movie.Title %></h1>
+
+<img src="<%= movie.Poster %>">
+<a class="btn btn-primary" href="/movies/<%= movie.imdbID %>/tasks/new">Add</a>
+
+<p><%= movie.Plot %></p>
+
+<% include ../partials/footer %>

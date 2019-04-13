@@ -7,7 +7,8 @@ var express = require("express"),
     //passportLocalMongoose = require("passport-local-mongoose"),
     request = require("request"),
     indexRoutes = require("./routes/index"),
-    User = require("./models/user");
+    User = require("./models/user"),
+    Task = require("./models/task");
 
 mongoose.connect("mongodb://localhost:27017/movie-tasklist", {useNewUrlParser: true});
 app.set("view engine", "ejs");
@@ -25,6 +26,11 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+ });
 
 //=========================routes=============================
 app.get("/", function(req, res) {
@@ -48,9 +54,45 @@ app.get("/result", function(req, res){
 
 });
 
-app.post("/tasks", function(req, res){
-    res.send("id of movie: " + req.body.task.id);
-    //console.log("id of movie: "+req.params.id);
+app.get("/movies/:id", function(req, res){
+    var query = req.params.id;
+    var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
+    request(url, function(err, response, body){
+        if (!err && response.statusCode == 200) {
+            var data = JSON.parse(body);
+            res.render("movies/show", {movie: data});
+        }
+    });
+});
+
+app.get("/movies/:id/tasks/new", function(req, res) {
+    var query = req.params.id;
+    var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
+    request(url, function(err, response, body){
+        if (!err && response.statusCode == 200) {
+            var data = JSON.parse(body);
+            res.render("tasks/new", {movie: data});
+        }
+    });
+});
+
+app.post("/movies/:id/tasks", function(req, res){
+    var query = req.params.id;
+    var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
+    request(url, function(err, response, body){
+        if (!err && response.statusCode == 200) {
+            var data = JSON.parse(body);
+            var newTask = {
+                movie:      data.Title,
+                movieID:    req.params.id,
+                due:        req.body.due
+            };
+
+            req.user.tasks.push(newTask);
+            req.user.save();
+        }
+    });
+    res.redirect("/");
 });
 
 app.use("/", indexRoutes);

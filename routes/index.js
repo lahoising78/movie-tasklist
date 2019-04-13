@@ -12,7 +12,7 @@ router.post("/register", function(req, res){
     var newUser = User({
         username:   req.body.username,
         //password:   req.body.password,
-        //tasks:      []
+        tasks:      []
     });
 
     User.register(newUser, req.body.password, function(err, user){

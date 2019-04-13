@@ -8,21 +8,16 @@
             <th><strong>Title</strong></th>
             <th><strong>Year</strong></th>
             <th><strong>Type</strong></th>
-            <th><strong>Add</strong></th>
         </tr>
     </thead>
     <tbody>
         <% if(data.Search) {data.Search.forEach(function(movie){ %>
             <tr>
-                <td><%= movie.Title %></td>
+                <td>
+                    <a href="movies/<%= movie.imdbID%>"><%= movie.Title %></a>
+                </td>
                 <td><%= movie.Year %></td>
                 <td><%= movie.Type %></td>
-                <td>
-                    <form action="/tasks" method="post">
-                        <input class="hiddenID" type="text" name="task[id]" value="<%= movie.imdbID %>">
-                        <button class="btn btn-primary">Add</button>
-                    </form>
-                </td>
             </tr>
         <% }); }%>
     </tbody>
