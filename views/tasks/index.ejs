@@ -15,9 +15,16 @@
     <tbody>
         <% movies.forEach(function(movie) { %>
             <tr>
-                <td><%= movie.title %></td>
-                <td><%= movie.due.toDateString() %></td>
-                <td><%= movie.status %></td>
+                <td><%= movie.movie %></td>
+                <td><%= movie.due %></td>
+                <!-- toDateString() -->
+                <td>
+                    <% if(movie.status) { %>
+                        <%= movie.status %>
+                    <% } else { %>
+                        plan to watch
+                    <% } %>
+                </td>
             </tr>
         <% }); %>
     </tbody>
