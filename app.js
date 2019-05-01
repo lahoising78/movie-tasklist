@@ -37,8 +37,8 @@ app.use(function(req, res, next){
 
 //=========================routes=============================
 app.use("/", indexRoutes);
-app.use("/", movieRoutes);
-app.use("/", taskRoutes);
+app.use("/movies", movieRoutes);
+app.use("/movies/:id/tasks", taskRoutes);
 
 //======================listen==========================
 app.listen(3000, function(){

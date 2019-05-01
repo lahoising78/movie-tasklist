@@ -7,6 +7,7 @@ var request = require("request");
 //=================authentication======================
 router.get("/", function(req, res) {
     var movies = [];
+    var rn = new Date();
     if (req.user) {
         //console.log("req.user is not null");
         User.findById(req.user._id, function(err, user){
@@ -16,10 +17,10 @@ router.get("/", function(req, res) {
                 //console.log("found user and stuff");
                 user.tasks.forEach(function(task){
                     movies.push(task);
-                    console.log(task);
-                    console.log(movies);
+                    //console.log(task);
+                    //console.log(movies);
                 });
-                res.render("tasks/index", {movies, movies});
+                res.render("tasks/index", {movies: movies, rn: rn.toJSON()} );
             }
         });
     } else {

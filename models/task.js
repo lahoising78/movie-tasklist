@@ -4,7 +4,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var taskSchema = mongoose.Schema({
     movie:      String,
     movieID:    String,
-    due:        Date,
+    due:        String,
     status:     String
 });
 

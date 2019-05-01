@@ -1,8 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var request = require("request");
+var bodyParser = require("body-parser");
 
-router.get("/movies/:id", function(req, res){
+router.get("/:id", function(req, res){
     var query = req.params.id;
     var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
     request(url, function(err, response, body){

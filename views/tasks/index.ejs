@@ -14,9 +14,15 @@
     </thead>
     <tbody>
         <% movies.forEach(function(movie) { %>
+            <% if(movie.status === "watched") return; %>
             <tr>
                 <td><%= movie.movie %></td>
-                <td><%= movie.due %></td>
+                <!-- <% console.log(movie.due); console.log(rn); %> -->
+                <% if(movie.due > rn) {%>
+                    <td><%= movie.due %></td>
+                <%} else {%>
+                    <td class="late"><%= movie.due %></td>
+                <% } %>
                 <!-- toDateString() -->
                 <td>
                     <% if(movie.status) { %>

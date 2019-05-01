@@ -1,10 +1,12 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 var passport = require("passport");
 var User = require("../models/user");
-request = require("request");
+var request = require("request");
+var bodyParser = require("body-parser");
+var Task = require("../models/task");
 
-router.get("/movies/:id/tasks/new", function(req, res) {
+router.get("/new", function(req, res) {
     var query = req.params.id;
     var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
     request(url, function(err, response, body){
@@ -15,7 +17,7 @@ router.get("/movies/:id/tasks/new", function(req, res) {
     });
 });
 
-router.post("/movies/:id/tasks", function(req, res){
+router.post("/", function(req, res){
     var query = req.params.id;
     var url = "http://www.omdbapi.com/?i=" + query + "&apikey=thewdb";
     request(url, function(err, response, body){
