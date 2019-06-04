@@ -11,15 +11,15 @@
         </tr>
     </thead>
     <tbody>
-        <% if(data.Search) {data.Search.forEach(function(movie){ %>
-            <tr>
-                <td>
-                    <a href="movies/<%= movie.imdbID%>"><%= movie.Title %></a>
-                </td>
-                <td><%= movie.Year %></td>
-                <td><%= movie.Type %></td>
-            </tr>
-        <% }); }%>
+            <% if(data.Search) {data.Search.forEach(function(movie){ %>
+                <tr>
+                    <td>
+                        <a href="movies/<%= movie.imdbID%>"><%= movie.Title %></a>
+                    </td>
+                    <td><%= movie.Year %></td>
+                    <td><%= movie.Type %></td>
+                </tr>
+            <% }); }%>
     </tbody>
 </table>
 
